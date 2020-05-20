@@ -1,6 +1,8 @@
 using Asnapper.Hal101.Data;
 using Asnapper.Hal101.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Asnapper.Hal101.Controllers
 {
@@ -9,14 +11,18 @@ namespace Asnapper.Hal101.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly PeopleRepository _repository;
+        private readonly AddressRepository _addressRepository;
+        private readonly AddressRelationRepository _addressRelationRepository;
 
-        public PeopleController(PeopleRepository repository)
+        public PeopleController(PeopleRepository repository, AddressRepository addressRepository, AddressRelationRepository addressRelationRepository)
         {
             _repository = repository;
+            _addressRepository = addressRepository;
+            _addressRelationRepository = addressRelationRepository;
         }
 
         [HttpGet]
-        public ActionResult<PagedList<Person>> List([FromQuery]Paging paging)
+        public ActionResult<PagedList<Person>> List([FromQuery] Paging paging)
         {
             return _repository.List(paging);
         }
@@ -27,5 +33,9 @@ namespace Asnapper.Hal101.Controllers
         {
             return _repository.Get(id);
         }
+
+        [HttpGet]
+        [Route("{id}/addresses")]
+        public ActionResult<PagedList<Address>> ListAddresses([FromQuery] Paging paging, int id) => _addressRelationRepository.ListForPerson(paging, id);
     }
 }

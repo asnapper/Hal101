@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hallo;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Asnapper.Hal101.Models.Hypermedia
 {
@@ -24,7 +27,17 @@ namespace Asnapper.Hal101.Models.Hypermedia
     
     public class AddressListRepresentation : PagedListRepresentation<Address>
     {
-        public AddressListRepresentation(AddressRepresentation AddressRepresentation) 
-            : base("/addresses", AddressRepresentation) { }
+        public AddressListRepresentation(AddressRepresentation AddressRepresentation, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor) 
+            : base("/addresses", AddressRepresentation, urlHelper, httpContextAccessor) { }
+
+        // public AddressListRepresentation(string baseUrl, IHalLinks<Address> itemLinks) : base(baseUrl, itemLinks)
+        // {
+        // }
     }
+
+    // public class AddressListRelationsRepresentation : ListRepresentation<Address>
+    // {
+    //     public AddressListRelationsRepresentation(AddressRepresentation AddressRepresentation) 
+    //         : base("/addresses", AddressRepresentation) { }
+    // }
 }

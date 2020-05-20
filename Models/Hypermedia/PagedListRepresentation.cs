@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Hallo;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Asnapper.Hal101.Models.Hypermedia
 {
@@ -7,12 +10,17 @@ namespace Asnapper.Hal101.Models.Hypermedia
                                                            IHalEmbedded<PagedList<TItem>>, IHalLinks<PagedList<TItem>>
     {
         private readonly string _baseUrl;
+        private readonly IUrlHelper _urlHelper;
         private readonly IHalLinks<TItem> _itemLinks;
 
-        protected PagedListRepresentation(string baseUrl, IHalLinks<TItem> itemLinks)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        protected PagedListRepresentation(string baseUrl, IHalLinks<TItem> itemLinks, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor)
         {
             _baseUrl = baseUrl;
             _itemLinks = itemLinks;
+            _urlHelper = urlHelper;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         public object StateFor(PagedList<TItem> resource)
@@ -39,18 +47,21 @@ namespace Asnapper.Hal101.Models.Hypermedia
 
         public IEnumerable<Link> LinksFor(PagedList<TItem> resource)
         {
-            yield return new Link("self", $"{_baseUrl}?page={resource.CurrentPage}");
-            yield return new Link("first", $"{_baseUrl}?page=1");
-            yield return new Link("last", $"{_baseUrl}?page={resource.TotalPages}");
+            // var selfUrl = _urlHelper.Action(_urlHelper.RouteUrl.selfUrl)
+            // HttpC
+            var self = _httpContextAccessor.HttpContext.Request.Path.ToString();
+            yield return new Link("self", $"{self}?page={resource.CurrentPage}");
+            yield return new Link("first", $"{self}?page=1");
+            yield return new Link("last", $"{self}?page={resource.TotalPages}");
 
             if (resource.CurrentPage > 1)
             {
-                yield return new Link("prev", $"{_baseUrl}?page={resource.CurrentPage - 1}");
+                yield return new Link("prev", $"{self}?page={resource.CurrentPage - 1}");
             }
 
             if (resource.CurrentPage < resource.TotalPages)
             {
-                yield return new Link("next", $"{_baseUrl}?page={resource.CurrentPage + 1}");
+                yield return new Link("next", $"{self}?page={resource.CurrentPage + 1}");
             }
         }
     }

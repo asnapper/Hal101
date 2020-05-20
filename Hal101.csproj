@@ -6,7 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Hallo\Hallo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Hallo" Version="2.1.0" />
     </ItemGroup>
 
 </Project>

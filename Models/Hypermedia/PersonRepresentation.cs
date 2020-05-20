@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hallo;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Asnapper.Hal101.Models.Hypermedia
 {
@@ -24,7 +27,7 @@ namespace Asnapper.Hal101.Models.Hypermedia
     
     public class PersonListRepresentation : PagedListRepresentation<Person>
     {
-        public PersonListRepresentation(PersonRepresentation personRepresentation) 
-            : base("/people", personRepresentation) { }
+        public PersonListRepresentation(PersonRepresentation personRepresentation, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor) 
+            : base("/people", personRepresentation, urlHelper, httpContextAccessor) { }
     }
 }
