@@ -1,0 +1,14 @@
+[
+    {
+        "PersonId": 1,
+        "AddressId": 1
+    },
+    {
+        "PersonId": 2,
+        "AddressId": 2
+    },
+    {
+        "PersonId": 3,
+        "AddressId": 3
+    }
+]

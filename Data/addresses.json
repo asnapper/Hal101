@@ -1,0 +1,23 @@
+[
+    {
+        "Id": 1,
+        "Street": "First Street",
+        "StreetSuffix": "1",
+        "ZIP": "2500",
+        "City": "Biel/Bienne"
+    },
+    {
+        "Id": 2,
+        "Street": "Second Street",
+        "StreetSuffix": "1",
+        "ZIP": "2500",
+        "City": "Biel/Bienne"
+    },
+    {
+        "Id": 3,
+        "Street": "Third Street",
+        "StreetSuffix": "1",
+        "ZIP": "2500",
+        "City": "Biel/Bienne"
+    }
+]
