@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using Asnapper.Hal101.Data;
 using Asnapper.Hal101.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Asnapper.Hal101.Controllers
 {

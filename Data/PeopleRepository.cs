@@ -16,14 +16,14 @@ namespace Asnapper.Hal101.Data
         {
             _dataPath = Path.Combine(hostingEnvironment.ContentRootPath, "Data/people.json");
         }
-                
+
         private void EnsureDataLoaded()
         {
             if (_people != null)
             {
                 return;
             }
-            
+
             var json = File.ReadAllText(_dataPath);
             _people = JsonSerializer.Deserialize<Person[]>(json);
         }
@@ -35,12 +35,12 @@ namespace Asnapper.Hal101.Data
             var items = _people.Skip((paging.Page - 1) * paging.PageSize)
                 .Take(paging.PageSize)
                 .ToArray();
-            
+
             return new PagedList<Person>
             {
                 CurrentPage = paging.Page,
                 TotalItems = _people.Length,
-                TotalPages = (int)Math.Ceiling(_people.Length / (double)paging.PageSize),
+                TotalPages = (int) Math.Ceiling(_people.Length / (double) paging.PageSize),
                 Items = items
             };
         }

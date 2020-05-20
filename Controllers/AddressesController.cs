@@ -16,7 +16,7 @@ namespace Asnapper.Hal101.Controllers
         }
 
         [HttpGet]
-        public ActionResult<PagedList<Address>> List([FromQuery]Paging paging)
+        public ActionResult<PagedList<Address>> List([FromQuery] Paging paging)
         {
             return _repository.List(paging);
         }

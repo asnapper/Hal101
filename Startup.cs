@@ -50,9 +50,7 @@ namespace Asnapper.Hal101
 
             services.AddTransient<AddressRepresentation>();
             services.AddTransient<Hal<Address>, AddressRepresentation>();
-            // services.AddTransient<Hal<List<Address>>, List<AddressRepresentation>>();
             services.AddTransient<Hal<PagedList<Address>>, AddressListRepresentation > ();
-            // services.AddTransient<Hal<IEnumerable<Address>>, AddressListRelationsRepresentation > ();
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
