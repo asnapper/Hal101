@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using Hallo;
 using Microsoft.AspNetCore.Http;
@@ -9,15 +10,15 @@ namespace Asnapper.Hal101.Models.Hypermedia
     public abstract class PagedListRepresentation<TItem> : Hal<PagedList<TItem>>, IHalState<PagedList<TItem>>,
         IHalEmbedded<PagedList<TItem>>, IHalLinks<PagedList<TItem>>
         {
-            private readonly string _baseUrl;
+            private readonly string _keyName;
             private readonly IUrlHelper _urlHelper;
             private readonly IHalLinks<TItem> _itemLinks;
 
             private readonly IHttpContextAccessor _httpContextAccessor;
 
-            protected PagedListRepresentation(string baseUrl, IHalLinks<TItem> itemLinks, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor)
+            protected PagedListRepresentation(string keyName, IHalLinks<TItem> itemLinks, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor)
             {
-                _baseUrl = baseUrl;
+                _keyName = keyName;
                 _itemLinks = itemLinks;
                 _urlHelper = urlHelper;
                 _httpContextAccessor = httpContextAccessor;
@@ -39,10 +40,18 @@ namespace Asnapper.Hal101.Models.Hypermedia
                 let links = _itemLinks.LinksFor(item)
                 select new HalRepresentation(item, links);
 
-                return new
-                {
-                    Items = items.ToList()
-                };
+                var result = new Dictionary<string, object>();
+
+                result[_keyName] = items;
+
+                return result;
+               
+
+                // return new
+                // {
+
+                //     bla = items.ToList()
+                // };
             }
 
             public IEnumerable<Link> LinksFor(PagedList<TItem> resource)

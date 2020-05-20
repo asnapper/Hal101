@@ -27,6 +27,6 @@ namespace Asnapper.Hal101.Models.Hypermedia
 
     public class PersonListRepresentation : PagedListRepresentation<Person>
     {
-        public PersonListRepresentation(PersonRepresentation personRepresentation, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor) : base("/people", personRepresentation, urlHelper, httpContextAccessor) { }
+        public PersonListRepresentation(PersonRepresentation personRepresentation, IUrlHelper urlHelper, IHttpContextAccessor httpContextAccessor) : base("people", personRepresentation, urlHelper, httpContextAccessor) { }
     }
 }
