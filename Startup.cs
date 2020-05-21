@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
+
 using Asnapper.Hal101.Data;
 using Asnapper.Hal101.Models;
 using Asnapper.Hal101.Models.Hypermedia;
@@ -26,8 +28,12 @@ namespace Asnapper.Hal101
         {
             services.AddControllers(options =>
             {
+                options.OutputFormatters.Clear();
                 options.RespectBrowserAcceptHeader = true;
-                options.OutputFormatters.Add(new HalJsonOutputFormatter());
+                options.OutputFormatters.Add(new HalJsonOutputFormatter(new JsonSerializerOptions{
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                }));
             });
 
             services.AddHttpContextAccessor();
@@ -51,6 +57,7 @@ namespace Asnapper.Hal101
             services.AddTransient<AddressRepresentation>();
             services.AddTransient<Hal<Address>, AddressRepresentation>();
             services.AddTransient<Hal<PagedList<Address>>, AddressListRepresentation > ();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
